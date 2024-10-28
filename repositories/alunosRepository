@@ -1,0 +1,58 @@
+const {v4: uuidv4} = require('uuid')
+
+let alunos = []
+
+// CRUD - Create Read Update Delete
+
+//Create
+function insert({nome, email, nome_curso}) {
+    const aluno = {
+        id: uuidv4(),
+        nome,
+        email,
+        nome_curso
+    }
+    alunos.push(aluno)
+    return aluno
+}
+
+//Read
+function findAll() {
+    if(alunos.length === 0) {
+        return null
+    }
+    return alunos
+}
+
+//Update
+function update(id, {nome, email, nome_curso}) {
+    const aluno = {
+        id,
+        nome,
+        email,
+        nome_curso
+    }
+    let ret = alunos.findIndex(index => index.id === id)
+    if(ret === -1) {
+        return null
+    }
+    alunos[ret] = aluno
+    return alunos[ret]
+}
+
+//Delete
+function remove(id) {
+    let ret = alunos.findIndex(index => index.id === id)
+    if(ret === -1) {
+        return null
+    }
+    alunos = alunos.filter(idx => idx.id !== id)
+    return alunos
+}
+
+module.exports = {
+    findAll,
+    insert,
+    update,
+    remove
+}
